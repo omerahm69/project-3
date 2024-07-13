@@ -8,9 +8,24 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-CODER=Credentials.from_service_account_file('codersurvey.json')
-SCOPED_CODER=CODER.with_scopes(SCOPE)
-GSPREAD_CODER=gspread.authorize(SCOPED_CODER)
-SHEET=GSPREAD_CODER.open('codersurvey')
+CRED= Credentials.from_service_account_file('codersurvey.json')
+SCOPED_CRED=CRED.with_scopes(SCOPE)
+GSPREAD_CLIENT=gspread.authorize(SCOPED_CRED)
+
+SHEET=GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data')
+
+worksheet=SHEET.sheet1
+data=worksheet.get_all_records()
+print(data)
+
+
+
+
+
+
+
+
+
+
 
 
