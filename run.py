@@ -1,5 +1,8 @@
 import gspread
 from google.oauth2.service_account import Credentials
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
 
 SCOPE = [
@@ -16,9 +19,32 @@ SHEET=GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data')
 
 worksheet=SHEET.sheet1
 data=worksheet.get_all_records()
-print(data)
+df = pd.DataFrame(data)
+print(df[:10])
+headers=df.loc[0]
+print(headers)
+Shape=df.shape
+print(Shape)
+
+Summary_stats=df.describe(include='all')
+print(Summary_stats)
 
 
+ser1=df.filter(["Age", "SchoolDegree", "MaritalStatus", "Income", "Gender","HasChildren","ChildrenNumber"]).head()
+print(ser1)
+
+ser1.plot()
+plt.show()
+
+plt.imshow(ser1.corr() , cmap = 'autumn' , interpolation = 'nearest' )
+
+plt.title("Heat Map")
+plt.show()
+
+
+
+
+    
 
 
 
