@@ -26,20 +26,51 @@ print(headers)
 Shape=df.shape
 print(Shape)
 
-Summary_stats=df.describe(include='all')
+Summary_stats=df.describe(include='object')
 print(Summary_stats)
 
+age=df.value_counts("Age")
+print(age)
+school=df.value_counts("SchoolDegree")
+print(school)
+school.plot()
+plt.show()
 
 ser1=df.filter(["Age", "SchoolDegree", "MaritalStatus", "Income", "Gender","HasChildren","ChildrenNumber"]).head()
 print(ser1)
 
+for col in ser1.select_dtypes(include='object').columns:
+    print(df[col].value_counts())
+
+contingency_table = pd.crosstab(df['Age'], df['SchoolDegree'])
+print(contingency_table )
+
 ser1.plot()
 plt.show()
 
-plt.imshow(ser1.corr() , cmap = 'autumn' , interpolation = 'nearest' )
-
-plt.title("Heat Map")
+NumberOfChildren = df.value_counts("ChildrenNumber")
+print(NumberOfChildren)
+NumberOfChildren.plot()
 plt.show()
+
+
+gender = df.value_counts("Gender")
+print(gender)
+gender.plot()
+plt.show()
+
+Maritalstatus = df.value_counts("MaritalStatus")
+print(Maritalstatus)
+Maritalstatus.plot()
+plt.show()
+
+
+
+
+
+
+
+
 
 
 
