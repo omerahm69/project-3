@@ -1,88 +1,55 @@
+import argparse
+import pandas as pd
 import gspread
 from google.oauth2.service_account import Credentials
-import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import numpy as np
 
-
+# Define the scope
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
-    ]
+]
 
+# Authenticate and create the client
+CRED = Credentials.from_service_account_file('codersurvey.json')
+SCOPED_CRED = CRED.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CRED)
 
-CRED= Credentials.from_service_account_file('codersurvey.json')
-SCOPED_CRED=CRED.with_scopes(SCOPE)
-GSPREAD_CLIENT=gspread.authorize(SCOPED_CRED)
+def import_data():
+    sheet = GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data').sheet1
+    data = pd.DataFrame(sheet.get_all_records())
+    #data = pd.DataFrame({'Example': [1,2,3]})
+    return data
 
-SHEET=GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data')
-worksheet=SHEET.sheet1
-data=worksheet.get_all_records()
-df = pd.DataFrame(data)
+def analyze_data(data):
+    data.describe().to_csv("analysis_results.csv")
+    plt.figure(figsize=(10, 6))
+    sns.histplot(data['Age'], bins=20, kde=True)
+    plt.title('Age Distribution of Survey Respondents')
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+    plt.show()
 
-df.info()
+def main():
+    parser = argparse.ArgumentParser(description="Survey Data Analysis")
+    parser.add_argument('--import', action='store_true', help='Import Google Sheet Data')
+    parser.add_argument('--analyze', action='store_true', help='Analyze Imported Data')
 
-Summary_stats=df.describe(include='all')
-print(Summary_stats)
+    args = parser.parse_args()
 
-#headers=df.loc[0]
-#print(headers)
-#Shape=df.shape
-#print(Shape)
-#pd.set_option("display.max.columns", None)
+    #if args.import:
+    data = import_data()
+    print("Data imported successfully!")
+    data.to_csv("imported_data.csv", index=False)
+    print(data)
+    
+    #if args.analyze:
+    data = pd.read_csv("imported_data.csv")
+    analyze_data(data)
 
-My_data=pd.DataFrame(df, columns=["Age", "SchoolDegree", "MaritalStatus", "Income", "Gender","HasChildren","ChildrenNumber"])
-
-print("My_data:\n", My_data)
-#for col in My_data.select_dtypes(include='object').columns:
-        #print(My_data[col].value_counts())
-
-Summary_stats=df.describe(include='object')
-print(Summary_stats)
-
-NumberOfChildren = df.value_counts("ChildrenNumber")
-print(NumberOfChildren)
-NumberOfChildren.plot(kind="bar", color='yellow')
-
-Numerical_data=df.select_dtypes("Int64", "Float64")
-print(Numerical_data)
-
-#ages=df.["Age"]
-#average=df.groupby('Age').mean()
-#print(average)
-
-ages = My_data["Age"].value_counts()
-bins=np.array([0,25,50,75,100])
-groups=My_data.groupedby(pd.cut.age,bins)
-output=groups.sum()
-average=output/len(ages)
-print(average)
-
-
-gender = My_data["Gender"].value_counts(normalize='True')
-gender.plot(kind='bar',  color='blue')
-plt.show()
-
-schooLdegree = My_data["SchoolDegree"].value_counts(normalize='True')
-gender.plot(kind='bar',  color='red')
-plt.show()
-
-
-
-Maritalstatus = My_data["MaritalStatus"].value_counts(normalize='True')
-Maritalstatus.plot(kind='bar', color='green')
-plt.show()
-
-
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    main()
 
 
