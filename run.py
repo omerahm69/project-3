@@ -43,8 +43,8 @@ def import_file (file_path):
 def basic_statistics(data):
 
     df=pd.DataFrame(data)
-    df.replace('NA', 32, inplace=True)
-    df['Age']=pd.to_numeric(df['Age'], errors='coerce')
+    
+    df['Age']=df.replace('NA',32,inplace=True)
     
     numerical_features=df.select.dtypes(include='int64')
     categorical_features=df.select.dtype(include='object')
@@ -72,7 +72,7 @@ def analyze_data(data):
     income=df['Income'].value_counts()
     average_income=sum(income)/len(income)
     print(average_income)
-    
+
     commutetime=df['CommuteTime'].value_counts()
     average_commutetime=sum(commutetime)/len(commutetime)
     print(average_commutetime)
