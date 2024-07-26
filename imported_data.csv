@@ -12,7 +12,7 @@ Age,ChildrenNumber,CommuteTime,Gender,HasChildren,HoursLearning,Income,MoneyForL
 57,NA,0,male,0,8,20000,400,360,bachelor's degree
 23,NA,42,male,NA,5,NA,0,12,"some college credit, no degree"
 47,NA,120,male,NA,5,90000,500,36,bachelor's degree
-32,NA,40,male,NA,5,NA,300,12,bachelor's degree
+NA,NA,40,male,NA,5,NA,300,12,bachelor's degree
 37,1,10,male,1,2,NA,0,6,"some college credit, no degree"
 31,NA,150,female,NA,10,NA,NA,108,"professional degree (MBA, MD, JD, etc.)"
 27,NA,0,female,NA,4,80000,600,36,bachelor's degree

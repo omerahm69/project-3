@@ -40,53 +40,69 @@ def import_file (file_path):
     
     return data
 
+
 def basic_statistics(data):
 
     df=pd.DataFrame(data)
+    print(df.describe())
     
-    df['Age']=df.replace('NA',32,inplace=True)
-    
-    numerical_features=df.select.dtypes(include='int64')
-    categorical_features=df.select.dtype(include='object')
+    numerical_features=df.select_dtypes(include='int64')
+    categorical_features=df.select_dtype(include='object')
 
     numerical_stats=numerical_features.describe()
 
     categorical_counts={}
-    for col in categorical_features.column:
+    for col in categorical_features.columns:
         categorical_counts[col]=data[col].value_counts()
 
     return numerical_stats, categorical_counts
+
 
 def analyze_data(data):
     """ This function is for analyzing data """
 
     df=pd.DataFrame(data)
+    
     Summary_stats=df.select_dtypes('object')
     print(Summary_stats)
 
+    df['Age']=pd.to_numeric(df['Age'],errors='coerce')
+    df['Age'].fillna(df['Age'].mean(),inplace=True)
+    average_age=df['Age'].mean()
+    print(f"Average Age: {average_age}")
 
-    age=df['Age'].value_counts()
-    average=sum(age)/len(age)
-    print(average)
+    
+    average_income=df['Income'].mean()
+    print(f"Average_income): {average_income}")
 
-    income=df['Income'].value_counts()
-    average_income=sum(income)/len(income)
-    print(average_income)
+    commutetime=
+    average_commutetime=df['CommuteTime'].mean()
+    print(f"Average_commutetime): {average_commutetime}")
 
-    commutetime=df['CommuteTime'].value_counts()
-    average_commutetime=sum(commutetime)/len(commutetime)
-    print(average_commutetime)
+    schooldegree_counts=df['SchoolDegree'].value_counts()
+    print(schooldegree_counts)
 
-    schooldegree=df['SchoolDegree'].value_counts()
-    print(schooldegree)
-
-    data.describe().to_csv("analysis_results.csv")
+    #Plotting age distribution
     plt.figure(figsize=(10, 6))
     sns.histplot(data['Age'], bins=20, kde=True)
     plt.title('Age Distribution of Survey Respondents')
     plt.xlabel('Age')
     plt.ylabel('Frequency')
     plt.show()
+
+    return {
+        'average_age':average_age,
+        'average_income':average_income,
+        'average_commutetime':average_commutetime,
+        'schoolDegree':schooldegree_counts.to_dict()
+    }
+
+def export_results(results,filename='analysis_results.csv'):
+    """ This function exports the analysis results to a csv file"""
+    df_results=pd.DataFrame.from_dict(results,orient='index')
+    df_results.to_csv(filename, header=False)
+    print(f"Analysis results exported to {filename}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Survey Data Analysis")
@@ -105,6 +121,11 @@ def main():
     print("Data imported successfully!")
     data.to_csv("imported_data.csv", index=False)
     print(data)
+
+    numerical_stats, categorical_counts = basic_statistics(data)
+    results = analyze_data(data)
+
+    export_results(results)
     
     analyze_data(data)
 
