@@ -1,9 +1,4 @@
-,CommuteTime
-count,21.0
-mean,45.42857142857143
-std,42.24283540267086
-min,0.0
-25%,10.0
-50%,40.0
-75%,45.0
-max,150.0
+average_age,30.857142857142858
+average_income,47809.52380952381
+average_commutetime,45.42857142857143
+schoolDegree,"{""bachelor's degree"": 10, 'some college credit, no degree': 6, ""master's degree (non-professional)"": 3, 'high school diploma or equivalent (GED)': 1, 'professional degree (MBA, MD, JD, etc.)': 1}"

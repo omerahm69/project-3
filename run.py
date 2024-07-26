@@ -20,15 +20,14 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CRED)
 
 def import_data():
     """This function import data from Google sheet."""
-    print(f'Please import data from Google sheet:{sheet}')
     sheet = GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data').sheet1
+    print(f'Please import data from Google sheet:{sheet}')
     data = pd.DataFrame(sheet.get_all_records())
     return data
 
 
 def import_file(file_path):
     """This function import data from a file in a computer locally."""
-    print(f'Importing data from file: {file_path}')
 
     if file_path.endswith('.csv'):
         data=pd.read_csv(file_path)
@@ -46,7 +45,7 @@ def basic_statistics(data):
     print(df.describe())
     
     numerical_features=df.select_dtypes(include='int64')
-    categorical_features=df.select_dtype(include='object')
+    categorical_features=df.select_dtypes(include='object')
 
     numerical_stats=numerical_features.describe()
 
@@ -59,13 +58,12 @@ def basic_statistics(data):
 
 def analyze_data(data):
     """This function is for analyzing data."""
+    #changing data into a Pandas Dataframe
     df=pd.DataFrame(data)
     
     Summary_stats=df.select_dtypes('object')
     print(Summary_stats)
 
-    df['Age']=pd.to_numeric(df['Age'],errors='coerce')
-    df['Age'].fillna(df['Age'].mean(),inplace=True)
     average_age=df['Age'].mean()
     print(f"Average Age: {average_age}")
     
@@ -75,8 +73,11 @@ def analyze_data(data):
     average_commutetime=df['CommuteTime'].mean()
     print(f"Average_commutetime): {average_commutetime}")
 
-    schooldegree_counts=df['SchoolDegree'].value_counts()
-    print(schooldegree_counts)
+    Schooldegree_counts=df['SchoolDegree'].value_counts()
+    print(Schooldegree_counts)
+
+    Gender_counts=df['Gender'].value_counts()
+    print(Gender_counts)
 
     #Plotting age distribution
     plt.figure(figsize=(10, 6))
@@ -86,11 +87,26 @@ def analyze_data(data):
     plt.ylabel('Frequency')
     plt.show()
 
+
+    plt.figure(figsize=(10, 6))
+    sns.histplot(data['SchoolDegree'], bins=20, kde=True)
+    plt.title('SchoolDegree Distribution of Survey Respondents')
+    plt.xlabel('Schooldegree_counts')
+    plt.ylabel('Frequency')
+    plt.show()
+
+    plt.figure(figsize=(10, 6))
+    sns.histplot(data['Gender'], bins=20, kde=True)
+    plt.title('Gender Distribution of Survey Respondents')
+    plt.xlabel('Gender_counts')
+    plt.ylabel('Frequency')
+    plt.show()
+
     return {
         'average_age':average_age,
         'average_income':average_income,
         'average_commutetime':average_commutetime,
-        'schoolDegree':schooldegree_counts.to_dict()
+        'schoolDegree':Schooldegree_counts.to_dict()
     }
 
 
@@ -100,7 +116,6 @@ def export_results(results,filename='analysis_results.csv'):
     df_results.to_csv(filename, header=False)
     print(f'Analysis results exported to {filename}')
 
-
 def main():
     parser = argparse.ArgumentParser(description="Survey Data Analysis")
     parser.add_argument('--import', action='store_true', help='Import Google Sheet Data')
@@ -109,9 +124,10 @@ def main():
     parser.add_argument('--file-path', type=str, help='Path to the local CSV or Excel file to import')
 
     args = parser.parse_args()
+    print(f'Please import your data choosing one of the following methods')
+    print(f'Example, google sheet or a file_path like this: file_path=C:/Users/omera/Desktop/codersurvey.xlsx')
     data = import_data()
     
-    file_path='C:/Users/omera/Desktop/codersurvey.xlsx'
     data=import_data()
     print(data.head())
     
@@ -119,12 +135,25 @@ def main():
     data.to_csv("imported_data.csv", index=False)
     print(data)
 
+    print(f'What sort of data do you want to analyze, numerical or categorical?')
     numerical_stats, categorical_counts = basic_statistics(data)
     results = analyze_data(data)
 
-    export_results(results)
-    
-    analyze_data(data)
+    #export_results(results)
+
+    if args.analyze:
+        numerical_stats, categorical_counts = basic_statistics(data)
+        results = analyze_data(data)
+        export_results(results)
+    else:
+        # Prompt user for analysis if no arguments are given
+        analyze_choice = input("Would you like to analyze the data? (yes/no): ")
+        if analyze_choice.lower() == 'yes':
+            numerical_stats, categorical_counts = basic_statistics(data)
+            results = analyze_data(data)
+            export_results(results)
+        else:
+            print("Analysis skipped. Exiting.")
 
 if __name__ == "__main__":
     main()

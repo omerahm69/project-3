@@ -1,22 +1,22 @@
 Age,ChildrenNumber,CommuteTime,Gender,HasChildren,HoursLearning,Income,MoneyForLearning,MonthsProgramming,SchoolDegree
-28,NA,35,male,0,30,32000,0,1,"some college credit, no degree"
+28,NA,35,male,1,30,32000,30,1,"some college credit, no degree"
 22,NA,90,male,NA,30,15000,20,2,"some college credit, no degree"
 19,NA,45,male,NA,20,48000,50,24,high school diploma or equivalent (GED)
 26,NA,45,female,NA,20,43000,100,3,bachelor's degree
 20,NA,10,female,NA,25,6000,1300,48,"some college credit, no degree"
-34,NA,45,male,NA,5,40000,0,12,bachelor's degree
+34,NA,45,male,NA,5,40000,400,12,bachelor's degree
 23,NA,60,male,NA,8,32000,400,13,bachelor's degree
-35,NA,120,male,0,NA,40000,0,NA,master's degree (non-professional)
+35,NA,120,male,2,15,40000,300,19,master's degree (non-professional)
 33,NA,0,male,NA,5,80000,3000,24,bachelor's degree
 33,NA,30,male,NA,20,80000,30,12,master's degree (non-professional)
-57,NA,0,male,0,8,20000,400,360,bachelor's degree
-23,NA,42,male,NA,5,NA,0,12,"some college credit, no degree"
+57,NA,0,male,1,8,20000,400,360,bachelor's degree
+23,NA,42,male,NA,5,3000,50,12,"some college credit, no degree"
 47,NA,120,male,NA,5,90000,500,36,bachelor's degree
-NA,NA,40,male,NA,5,NA,300,12,bachelor's degree
-37,1,10,male,1,2,NA,0,6,"some college credit, no degree"
-31,NA,150,female,NA,10,NA,NA,108,"professional degree (MBA, MD, JD, etc.)"
+32,NA,40,male,NA,5,42000,300,12,bachelor's degree
+37,1,10,male,1,2,35000,35,6,"some college credit, no degree"
+31,NA,150,female,NA,10,65000,800,108,"professional degree (MBA, MD, JD, etc.)"
 27,NA,0,female,NA,4,80000,600,36,bachelor's degree
-29,NA,30,male,NA,5,17000,0,6,bachelor's degree
-30,NA,0,male,NA,2,16000,0,36,bachelor's degree
-30,NA,42,male,0,20,NA,2000,24,"some college credit, no degree"
+29,NA,30,male,NA,5,17000,400,6,bachelor's degree
+30,NA,0,male,NA,2,16000,46,36,bachelor's degree
+30,NA,42,male,3,20,20000,2000,24,"some college credit, no degree"
 32,1,40,female,1,5,200000,30,12,master's degree (non-professional)
