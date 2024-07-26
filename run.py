@@ -75,7 +75,7 @@ def analyze_data(data):
     average_income=df['Income'].mean()
     print(f"Average_income): {average_income}")
 
-    commutetime=
+    
     average_commutetime=df['CommuteTime'].mean()
     print(f"Average_commutetime): {average_commutetime}")
 
