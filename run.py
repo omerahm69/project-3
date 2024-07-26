@@ -19,8 +19,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CRED)
 
 
 def import_data():
-    """ This function import data from Google sheet """
-
+    """This function import data from Google sheet"""
     print(f"Please import data from Google sheet: ")
     sheet = GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data').sheet1
     data = pd.DataFrame(sheet.get_all_records())
@@ -29,7 +28,7 @@ def import_data():
 
 def import_file (file_path):
     """This function import data from a file in a computer locally"""
-    print (f'Importing data from file: {file_path}')
+    print(f'Importing data from file: {file_path}')
 
     if file_path.endswith('.csv'):
         data=pd.read_csv(file_path)
@@ -60,7 +59,6 @@ def basic_statistics(data):
 
 def analyze_data(data):
     """ This function is for analyzing data """
-
     df=pd.DataFrame(data)
     
     Summary_stats=df.select_dtypes('object')
@@ -70,11 +68,9 @@ def analyze_data(data):
     df['Age'].fillna(df['Age'].mean(),inplace=True)
     average_age=df['Age'].mean()
     print(f"Average Age: {average_age}")
-
     
     average_income=df['Income'].mean()
     print(f"Average_income): {average_income}")
-
     
     average_commutetime=df['CommuteTime'].mean()
     print(f"Average_commutetime): {average_commutetime}")
@@ -96,6 +92,7 @@ def analyze_data(data):
         'average_commutetime':average_commutetime,
         'schoolDegree':schooldegree_counts.to_dict()
     }
+
 
 def export_results(results,filename='analysis_results.csv'):
     """ This function exports the analysis results to a csv file"""
@@ -128,7 +125,7 @@ def main():
     export_results(results)
     
     analyze_data(data)
-
+    
 if __name__ == "__main__":
     main()
 
