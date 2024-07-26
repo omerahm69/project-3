@@ -32,12 +32,18 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 Happy coding!
 
 This is my third project within the fullstack development at Code Institute. This project is about analyzing syúrvey data using Python. 
-The aim of the project is to to provide actionable insights from an inputted dataset.
+The aim of the project is to build an application that analyzes survey data and provide actionable insights from an inputted dataset.
+This application is a command-line interface (CLI) design for easy data import and analysis 
 
 Features:
-The potential features of the project is include the following:
-1. Import survey results from the terminal, structured data file or similar
-2. Parse and analyse the data
-3. Export the results to an appropriate file
+The potential features of the project includes the following:
+1.Data import
+- Allows users to import survey results via the terminal or by upploading a file from the computer. In additio the data import function supports multiple file fromat (CSV, Excel) 
+2. Data parse and analysis
+- Parse the imported data and validate data for consistency and completeness. Calculate basic statistics (mean) and identify trends and patterns (e.g using histogram )
+- 
+3.Visualization
+- Generate visual representations of the data (graphs) by using liberaries like Matplotlib, Seaborn or plotly for interactive plots.
+
 
 
