@@ -19,15 +19,15 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CRED)
 
 
 def import_data():
-    """This function import data from Google sheet"""
-    print(f"Please import data from Google sheet: ")
+    """This function import data from Google sheet."""
+    print(f'Please import data from Google sheet:{sheet}')
     sheet = GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data').sheet1
     data = pd.DataFrame(sheet.get_all_records())
     return data
 
 
-def import_file (file_path):
-    """This function import data from a file in a computer locally"""
+def import_file(file_path):
+    """This function import data from a file in a computer locally."""
     print(f'Importing data from file: {file_path}')
 
     if file_path.endswith('.csv'):
@@ -41,7 +41,7 @@ def import_file (file_path):
 
 
 def basic_statistics(data):
-
+    """This function deal with imported data types and seperated it into numerical and categorical."""
     df=pd.DataFrame(data)
     print(df.describe())
     
@@ -58,7 +58,7 @@ def basic_statistics(data):
 
 
 def analyze_data(data):
-    """ This function is for analyzing data """
+    """This function is for analyzing data."""
     df=pd.DataFrame(data)
     
     Summary_stats=df.select_dtypes('object')
@@ -95,10 +95,10 @@ def analyze_data(data):
 
 
 def export_results(results,filename='analysis_results.csv'):
-    """ This function exports the analysis results to a csv file"""
+    """This function exports the analysis results to a csv file"""
     df_results=pd.DataFrame.from_dict(results,orient='index')
     df_results.to_csv(filename, header=False)
-    print(f"Analysis results exported to {filename}")
+    print(f'Analysis results exported to {filename}')
 
 
 def main():
@@ -125,7 +125,7 @@ def main():
     export_results(results)
     
     analyze_data(data)
-    
+
 if __name__ == "__main__":
     main()
 
