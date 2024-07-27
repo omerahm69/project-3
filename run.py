@@ -122,9 +122,9 @@ def main():
                         'help=Import data from a local file')
     parser.add_argument('--analyze', action='store_true'
                         'help=Analyze Imported Data')
-    parser.add_argument('--sheet-name', type=str
+    parser.add_argument('--sheet-name', type='str'
                         'help=Name of the Google Sheet to import')
-    parser.add_argument('--file-path', type=str
+    parser.add_argument('--file-path', type='str'
                         'help=Path to the local CSV or Excel file to import')
     args = parser.parse_args()
     data = None
