@@ -1,4 +1,9 @@
-average_age,30.857142857142858
-average_income,47809.52380952381
-average_commutetime,45.42857142857143
-schoolDegree,"{""bachelor's degree"": 10, 'some college credit, no degree': 6, ""master's degree (non-professional)"": 3, 'high school diploma or equivalent (GED)': 1, 'professional degree (MBA, MD, JD, etc.)': 1}"
+,Age,CommuteTime,HoursLearning,Income,MoneyForLearning,MonthsProgramming
+count,21.0,21.0,21.0,21.0,21.0,21.0
+mean,30.857142857142858,45.42857142857143,11.857142857142858,47809.52380952381,513.8571428571429,38.38095238095238
+std,8.753774696013796,42.24283540267086,9.285934063333178,43318.14752227875,749.5468154634696,77.32559485091349
+min,19.0,0.0,2.0,3000.0,20.0,1.0
+25%,26.0,10.0,5.0,20000.0,46.0,12.0
+50%,30.0,40.0,8.0,40000.0,300.0,13.0
+75%,33.0,45.0,20.0,65000.0,500.0,36.0
+max,57.0,150.0,30.0,200000.0,3000.0,360.0

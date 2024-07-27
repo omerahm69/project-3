@@ -18,65 +18,70 @@ SCOPED_CRED = CRED.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CRED)
 
 
-def import_data(sheet_name):
-    """This function import data from Google sheet."""
-    sheet = GSPREAD_CLIENT.open(sheet_name).sheet1
+def import_data():
+    """ This function import data from Google sheet """
+
+    print(f"Please import data from Google sheet: ")
+    sheet = GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data').sheet1
     data = pd.DataFrame(sheet.get_all_records())
     return data
 
 
-def import_file(file_path):
-    """This function import data from a file in a computer locally."""
+def import_file (file_path):
+    """This function import data from a file in a computer locally"""
+    print (f'Importing data from file: {file_path}')
+
     if file_path.endswith('.csv'):
-        data = pd.read_csv(file_path)
+        data=pd.read_csv(file_path)
     elif file_path.endswith('.xlsx'):
-        data = pd.read_excel(file_path)
+        data=pd.read_excel(file_path)
     else:
-        raise ValueError(
-            "Unsupported file type. Please use a csv or excel file."
-        )
+        raise ValueError("Unsupported file type. Please use a csv or excel file.")
+    
     return data
 
-
 def basic_statistics(data):
-    """This function deal with imported data types."
-    "and separated it into numerical and categorical."""
-    # changing data into a Pandas Dataframe
-    df = pd.DataFrame(data)
+
+    df=pd.DataFrame(data)
     print(df.describe())
-    numerical_features = df.select_dtypes(include='int64')
-    categorical_features = df.select_dtypes(include='object')
+    
+    numerical_features=df.select.dtypes(include='int64')
+    categorical_features=df.select.dtype(include='object')
 
-    numerical_stats = numerical_features.describe()
+    numerical_stats=numerical_features.describe()
 
-    categorical_counts = {}
-    for col in categorical_features.columns:
-        categorical_counts[col] = data[col].value_counts()
+    categorical_counts={}
+    for col in categorical_features.column:
+        categorical_counts[col]=data[col].value_counts()
 
     return numerical_stats, categorical_counts
 
-
 def analyze_data(data):
-    """This function is for analyzing data."""
-    df = pd.DataFrame(data)
-    summary_stats = df.select_dtypes('object')
-    print(summary_stats)
-    average_age = df['Age'].mean()
-    print(f"Average Age: {average_age}")
-    average_income = df['Income'].mean()
-    print(f"Average Income: {average_income}")
-    average_commutetime = df['CommuteTime'].mean()
-    print(f"Average Commute Time: {average_commutetime}")
-    schooldegree_counts = df['SchoolDegree'].value_counts()
-    print(schooldegree_counts)
-    gender_counts = df['Gender'].value_counts()
-    print(gender_counts)
-    haschildren_accounts = df['HasChildren'].value_counts()
-    print(haschildren_accounts)
-    children_number = df['ChildrenNumber'].value_counts()
-    print(children_number)
+    """ This function is for analyzing data """
 
-    # Plotting age distribution
+    df=pd.DataFrame(data)
+    Summary_stats=df.select_dtypes('object')
+    print(Summary_stats)
+
+    df['Age']=pd.to_numeric(df['Age'],errors='coerce')
+    df['Age'].fillna(df['Age'].mean(),inplace=True)
+    average_age=df['Age'].mean()
+    #age=df['Age'].value_counts()
+    #average=sum(age)/len(age)
+    print(f"Average Age: {average_age}")
+
+    income=df['Income'].value_counts()
+    average_income=sum(income)/len(income)
+    print(average_income)
+
+    commutetime=df['CommuteTime'].value_counts()
+    average_commutetime=sum(commutetime)/len(commutetime)
+    print(average_commutetime)
+
+    schooldegree=df['SchoolDegree'].value_counts()
+    print(schooldegree)
+
+    data.describe().to_csv("analysis_results.csv")
     plt.figure(figsize=(10, 6))
     sns.histplot(data['Age'], bins=20, kde=True)
     plt.title('Age Distribution of Survey Respondents')
@@ -84,97 +89,27 @@ def analyze_data(data):
     plt.ylabel('Frequency')
     plt.show()
 
-    plt.figure(figsize=(10, 6))
-    sns.histplot(data['SchoolDegree'], bins=20, kde=True)
-    plt.title('School Degree Distribution of Survey Respondents')
-    plt.xlabel('School Degree')
-    plt.ylabel('Frequency')
-    plt.show()
-
-    plt.figure(figsize=(10, 6))
-    sns.histplot(data['Gender'], bins=20, kde=True)
-    plt.title('Gender Distribution of Survey Respondents')
-    plt.xlabel('Gender')
-    plt.ylabel('Frequency')
-    plt.show()
-
-    return {
-        'average_age': average_age,
-        'average_income': average_income,
-        'average_commutetime': average_commutetime,
-        'schoolDegree': schooldegree_counts.to_dict()
-    }
-
-
-def export_results(results, filename='analysis_results.csv'):
-    """This function exports the analysis results to a csv file"""
-    df_results = pd.DataFrame.from_dict(results, orient='index')
-    df_results.to_csv(filename, header=False)
-    print(f'Analysis results exported to {filename}')
-
-
 def main():
     parser = argparse.ArgumentParser(description="Survey Data Analysis")
-    parser.add_argument('--import-google', action='store_true'
-                        'help=Import Google Sheet Data')
-    parser.add_argument('--import-file', action='store_true'
-                        'help=Import data from a local file')
-    parser.add_argument('--analyze', action='store_true'
-                        'help=Analyze Imported Data')
-    parser.add_argument('--sheet-name', type='str'
-                        'help=Name of the Google Sheet to import')
-    parser.add_argument('--file-path', type='str'
-                        'help=Path to the local CSV'
-                        'or Excel file to import')
+    parser.add_argument('--import', action='store_true', help='Import Google Sheet Data')
+    parser.add_argument('--analyze', action='store_true', help='Analyze Imported Data')
+    parser.add_argument('--sheet-name', type=str, help='Name of the Google Sheet to import')
+    parser.add_argument('--file-path', type=str, help='Path to the local CSV or Excel file to import')
+
     args = parser.parse_args()
-    data = None
-
-    if args.import_google:
-        if not args.sheet_name:
-            raise ValueError("Please provide the name of"
-                             'the Google Sheet using --sheet-name')
-        data = import_data(args.sheet_name)
-    elif args.import_file:
-        if not args.file_path:
-            raise ValueError("Please provide the file path using --file-path")
-        data = import_file(args.file_path)
-    else:
-        # Prompt user for import method if no arguments are given
-        print("How would you like to import data?")
-        print("1. Google Sheet")
-        print("2. Local file")
-        choice = input("Enter 1 or 2: ")
-        if choice == '1':
-            sheet_name = input("Please enter the Google Sheet name:\n ")
-            data = import_data(sheet_name)
-        elif choice == '2':
-            file_path = input("Please enter the local"
-                              'file path (csv or xlsx):\n')
-            data = import_file(file_path)
-        else:
-            print("Invalid choice. Exiting.")
-            return
-
-    print("Data imported successfully!")
+    data = import_data()
+    
+    file_path='C:/Users/omera/Desktop/codersurvey.xlsx'
+    data=import_data()
     print(data.head())
+    
+    print("Data imported successfully!")
     data.to_csv("imported_data.csv", index=False)
-    print("Data saved to imported_data.csv")
-
-    if args.analyze:
-        numerical_stats, categorical_counts = basic_statistics(data)
-        results = analyze_data(data)
-        export_results(results)
-    else:
-        # Prompt user for analysis if no arguments are given
-        analyze_choice = input("Would you like to analyze the data?"
-                               '(yes/no):')
-        if analyze_choice.lower() == 'yes':
-            numerical_stats, categorical_counts = basic_statistics(data)
-            results = analyze_data(data)
-            export_results(results)
-        else:
-            print("Analysis skipped. Exiting.")
-
+    print(data)
+    
+    analyze_data(data)
 
 if __name__ == "__main__":
     main()
+
+
