@@ -116,16 +116,15 @@ def export_results(results, filename='analysis_results.csv'):
 def main():
     parser = argparse.ArgumentParser(description="Survey Data Analysis")
     parser.add_argument('--import-google', action='store_true'
-                        'help='Import Google Sheet Data')
+                        'help=Import Google Sheet Data')
     parser.add_argument('--import-file', action='store_true'
-                        ' help='Import data from a local file')
+                        'help=Import data from a local file')
     parser.add_argument('--analyze', action='store_true'
-                        'help='Analyze Imported Data')
-    parser.add_argument('--sheet-name', type=str,
-                        'help='Name of the Google'
-                        'Sheet to import')
-    parser.add_argument('--file-path', type=str,
-                        'help='Path to the local CSV'
+                        'help=Analyze Imported Data')
+    parser.add_argument('--sheet-name', type='str'
+                        'help=Name of the Google Sheet to import')
+    parser.add_argument('--file-path', type='str'
+                        'help=Path to the local CSV'
                         'or Excel file to import')
     args = parser.parse_args()
     data = None
@@ -146,11 +145,11 @@ def main():
         print("2. Local file")
         choice = input("Enter 1 or 2: ")
         if choice == '1':
-            sheet_name = input("Please enter the Google Sheet name: ")
+            sheet_name = input("Please enter the Google Sheet name:\n ")
             data = import_data(sheet_name)
         elif choice == '2':
             file_path = input("Please enter the local"
-                              'file path (csv or xlsx):')
+                              'file path (csv or xlsx):\n')
             data = import_file(file_path)
         else:
             print("Invalid choice. Exiting.")
