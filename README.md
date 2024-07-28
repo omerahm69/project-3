@@ -21,6 +21,14 @@ The potential features of the project include the following:
 3. Visualization
 
 - Generate visual representations of the data (graphs) by using libraries like Matplotlib, Seaborn or Plotly for interactive plots.
+
+- As a user, I need to have an idea about the data after importing it to the application and that is why it gives a summary about the data after importing.
+- As a user, I need to navigate with the application whether to import the data from a Google spread sheet or from a file on my computer. That is why, once running the program, a question arises in the terminal for the user to answer and choose one of the two options.
+- The basic statistics function and analyze function deals with data, analyzing it into numerical and categorical and ask the user which type of data to analyze.
+- Accordingly, an average value of the numerical values would be calculated and the number of counts for the categorical data.
+- For the visualization a histogram, would be plotted showing the trends in the data.
+- Finally, a report would be extracted for the user to have i a CSV file.
+  This will be the finished project but in this version I have not tested all of the above- mentioned functionality but, sure some of the things are working as in the figures below.
   
 ![Figure_1 age](https://github.com/user-attachments/assets/0cf6bc35-88c5-4612-8abe-62499c30ca97)
 
@@ -36,16 +44,16 @@ The application program includes four functions and follows as below:
 
 ![Application](https://github.com/user-attachments/assets/d81dbccf-dfb8-4910-ba99-39f3cb7108b9)
 
-The survey data is from Kaggle, 2016 New Coder "2016-FCC-New-Coders-Survey-Data.csv"
-But due to the limitations 
+The survey data is from Kaggle, 2016 New Coder "2016-FCC-New-Coders-Survey-Data.csv". The data contains about 1500 rows and 113 columns. It contains different types of data, numerical and categorical, as well as missing data. But due to the limitations of the terminal, I have chosen only 22 rows and 10 columns with no missing values.
 
-Testing: Validator testing
+Testing: 
+Validator testing
 
 ![Skärmbild 2024-07-27 113528 Styling checker ](https://github.com/user-attachments/assets/ce814ff4-29fb-4607-92b6-de0e2a6842f6)
 
 Unfixed Bugs 
--It is the use of Pandas library to change the survey data into a data frame before doing analysis. When I deployed to the Heruku I realized that pandas packages are not included in the dependancies and I couldn't navigate through the application after deployment. 
-- Since it is always common that survey data includes different types of data, like numerical and categorical and also some missing data. The idea was to deal with those kinds of data, seperate them and prepare the data seperately doing analysis, but I didn't manage to do that in this application. This will be fixed in the future. 
+-It is the use of Pandas library to change the survey data into a data frame before doing analysis. When I deployed to the Heruku I realized that pandas packages are not included in the dependencies and I couldn't navigate through the application after deployment. 
+- Since it is always common that survey data includes different types of data, like numerical and categorical and also some missing data. The idea was to deal with those kinds of data, separate them and prepare the data separately by doing analysis, but I couldn't manage to do that in this application currently. This will be fixed in the future. 
 
 Deployment
 
@@ -69,10 +77,8 @@ If you have forked or cloned the repository the steps to deploy are:
 5. The page will then provide the link to the website https://omerahm69.github.io/project-3/
 
 Credit
-
 Content
-
-. Process from the Code Institute Love Sadwishes project was used to help create this website- CI . Python code help was taken from w3schhols-W3Schools
+- Process from the Code Institute Love Sadwiches Walkthrough project was used to help create this website- CI . Python code help was taken from w3schhols-W3Schools and https://docs.python.org/3/howto/argparse.html.
 
 
 
