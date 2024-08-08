@@ -166,7 +166,7 @@ def main():
     else:
         # Prompt user for analysis if no arguments are given
         analyze_choice = input("Would you like to analyze the data?"
-                               '(yes/no):')
+                               '(yes/no):\n')
         if analyze_choice.lower() == 'yes':
             numerical_stats, categorical_counts = basic_statistics(data)
             results = analyze_data(data)
