@@ -177,11 +177,11 @@ def analyze_data(data):
     plt.show()
 def main():
     parser = argparse.ArgumentParser(description="Survey Data Analysis")
-    parser.add_argument('--import-google', action='store_true'
+    parser.add_argument('--import-google', action='store_true',
                         'help="Import Google Sheet Data')
-    parser.add_argument('--import-file', action='store_true'
+    parser.add_argument('--import-file', action='store_true',
                         'help=Import data from a local file')
-    parser.add_argument('--analyze', action='store_true'
+    parser.add_argument('--analyze', action='store_true',
                         'help=Analyze Imported Data')
     parser.add_argument('--sheet-name', type='str'
                         'help=Name of the Google Sheet to import')
