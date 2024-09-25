@@ -175,18 +175,38 @@ def analyze_data(data):
     plt.xlabel('Age')
     plt.ylabel('Frequency')
     plt.show()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Survey Data Analysis")
-    parser.add_argument('--import-google', action='store_true',
-                        'help="Import Google Sheet Data')
-    parser.add_argument('--import-file', action='store_true',
-                        'help=Import data from a local file')
-    parser.add_argument('--analyze', action='store_true',
-                        'help=Analyze Imported Data')
-    parser.add_argument('--sheet-name', type='str'
-                        'help=Name of the Google Sheet to import')
-    parser.add_argument('--file-path', type='str'
-                        'help=Path to the local CSV or Excel file to import')
+    parser.add_argument('--import-google', action='store_true', help="Import Google Sheet Data")
+    parser.add_argument('--import-file', action='store_true', help="Import data from a local file")
+    parser.add_argument('--analyze', action='store_true', help="Analyze Imported Data")
+    parser.add_argument('--sheet-name', type=str, help="Name of the Google Sheet to import")
+    parser.add_argument('--file-path', type=str, help="Path to the local CSV or Excel file to import")
+    args = parser.parse_args()
+
+    if args.import_google:
+        data = import_data()
+    elif args.import_file and args.file_path:
+        data = import_file(args.file_path)
+    else:
+        print("Please specify a data source to import.")
+        return
+
+    if args.analyze:
+        analyze_data(data)
+
+    print("Data imported successfully!")
+    print(data)
+
+"""def main():
+    parser = argparse.ArgumentParser(description="Survey Data Analysis")
+    parser.add_argument('--import-google', action='store_true', 'help="Import Google Sheet Data')
+    parser.add_argument('--import-file', action='store_true', 'help=Import data from a local file')
+    parser.add_argument('--analyze', action='store_true', 'help=Analyze Imported Data')
+    parser.add_argument('--sheet-name', type='str', 'help=Name of the Google Sheet to import')
+    parser.add_argument('--file-path', type='str' ,'help=Path to the local CSV or Excel file to import')
     args = parser.parse_args()
     data = import_data()
 
@@ -204,7 +224,7 @@ if __name__ == "__main__":
     main()
 
 
-    """if args.import_google:
+    if args.import_google:
         if not args.sheet_name:
             raise ValueError("Please provide the name of"
                              'the Google Sheet using --sheet-name')
