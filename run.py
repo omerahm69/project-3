@@ -26,10 +26,10 @@ def import_data():
         sheet_name = input("Enter the sheet name (leave blank for the first sheet): ").strip() or 0
         df = pd.read_excel(file_path, sheet_name=sheet_name)
     elif choice == "3":
-        CRED = Credentials.from_service_account_file('credential.json')
+        CRED = Credentials.from_service_account_file('cred.json')
         SCOPED_CRED = CRED.with_scopes(SCOPE)
         GSPREAD_CLIENT = gspread.authorize(SCOPED_CRED)
-        creds = Credentials.from_service_account_file('credential.json', scopes=SCOPE)
+        creds = Credentials.from_service_account_file('cred.json', scopes=SCOPE)
         client = gspread.authorize(creds)
         sheet = GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data').sheet1
         spreadsheet = client.open_by_url("https://docs.google.com/spreadsheets/d/1V8nvA1cu7rkhW9fwn6lfU0ROm3RhzFIQ3a5onbLd1EQ/edit")
