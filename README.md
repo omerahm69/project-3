@@ -12,7 +12,7 @@ The potential features of the project include the following:
 
 1. Data import
 
-- Allows users to import survey results via the terminal or by uploading a file from the computer. The data import function supports multiple file formats (CSV, Excel). 
+- Allows users to import survey results via the terminal or by uploading a file from the computer. The data import function supports multiple file formats (CSV, Excel and Google sheet). 
 
 2. Data parse and analysis
 
@@ -21,7 +21,9 @@ The potential features of the project include the following:
 3. Visualization
 
 - Generate visual representations of the data (graphs) by using libraries like Matplotlib, Seaborn or Plotly for interactive plots.
+4. Data Export in a file 
 
+User Stories:
 - As a user, I need to have an idea about the data after importing it to the application and that is why it gives a summary about the data after importing.
 - As a user, I need to navigate with the application whether to import the data from a Google spread sheet or from a file on my computer. That is why, once running the program, a question arises in the terminal for the user to answer and choose one of the two options.
 - The basic statistics function and analyze function deals with data, analyzing it into numerical and categorical and ask the user which type of data to analyze.
