@@ -26,14 +26,14 @@ def import_data():
         sheet_name = input("Enter the sheet name (leave blank for the first sheet): ").strip() or 0
         df = pd.read_excel(file_path, sheet_name=sheet_name)
     elif choice == "3":
-        CRED = Credentials.from_service_account_file('cred.json')
+        CRED = Credentials.from_service_account_file('creds.json')
         SCOPED_CRED = CRED.with_scopes(SCOPE)
         GSPREAD_CLIENT = gspread.authorize(SCOPED_CRED)
-        creds = Credentials.from_service_account_file('cred.json', scopes=SCOPE)
+        creds = Credentials.from_service_account_file('creds.json', scopes=SCOPE)
         client = gspread.authorize(creds)
         sheet = GSPREAD_CLIENT.open('2016-FCC-New-Coders-Survey-Data').sheet1
         spreadsheet = client.open_by_url("https://docs.google.com/spreadsheets/d/1V8nvA1cu7rkhW9fwn6lfU0ROm3RhzFIQ3a5onbLd1EQ/edit")
-        worksheet = spreadsheet.sheet1  # or use: .worksheet("Sheet1") for named access
+        worksheet = spreadsheet.sheet1
         data = worksheet.get_all_records()
         df = pd.DataFrame(data)
         print(df.head())
@@ -44,7 +44,7 @@ def import_data():
 def analyze_data():
     """This function analyzes the data."""
     try:
-            df = pd.read_pickle('data.pkl')
+        df = pd.read_pickle('data.pkl')
     except FileNotFoundError:
         print("No data found! Please import data first.")
         return
@@ -73,28 +73,36 @@ def analyze_data():
 
     ages = df['Age'].dropna().astype(float)
     if not ages.empty:
-        average_age = ages.mean()
+        average_age=sum(ages)/len(ages)
         print(f"Average Age: {average_age:.2f}")
         sns.histplot(ages, bins=20, kde=True)
         plt.title('Age Distribution')
         plt.xlabel('Age')
         plt.ylabel('Frequency')
         plt.show()
-    income=df['Income'].value_counts()
-    average_income=sum(income)/len(income)
-    print(average_income)
+
     commutetime=df['CommuteTime'].value_counts()
     average_commutetime=sum(commutetime)/len(commutetime)
     print(average_commutetime)
-    schooldegree=df['SchoolDegree'].value_counts()
-    print(schooldegree)
-    df.describe().to_csv("analysis_results.csv")
     plt.figure(figsize=(10, 6))
-    sns.histplot(df['Age'], bins=20, kde=True)
-    plt.title('Age Distribution of Survey Respondents')
-    plt.xlabel('Age')
+    sns.histplot(df['CommuteTime'], bins=20, kde=True)
+    plt.title('CommuteTime Distribution of Survey Respondents')
+    plt.xlabel('CommuteTime')
     plt.ylabel('Frequency')
     plt.show()
+
+    schooldegree=df['SchoolDegree'].value_counts()
+    print("School Degrees:")
+    print(schooldegree)
+    sns.histplot(schooldegree, bins=20, kde=True)
+    plt.title('School Distribution')
+    plt.xlabel('School Degree')
+    plt.ylabel('Frequency')
+    plt.show()
+    print(schooldegree)
+    #df.describe().to_csv("analysis_results.csv")
+    
+
     income=df['Income'].value_counts()
     average_income=sum(income)/len(income)
     print(average_income)
@@ -106,38 +114,17 @@ def analyze_data():
             plt.xlabel('Income')
             plt.ylabel('Frequency')
             plt.show()
-    degree_counts = df['SchoolDegree'].value_counts()
-    print("School Degrees:")
-    print(degree_counts)
-    sns.histplot(degree_counts, bins=20, kde=True)
-    plt.title('School Distribution')
-    plt.xlabel('School Degree')
-    plt.ylabel('Frequency')
-    plt.show()
-    #def export_data():
-    #try:
-        #data = pd.read_pickle('data.pkl')
-    #except FileNotFoundError:
-        #print("No data found! Please import and analyze data first.")
-        #return
-    #print("Choose the export format:")
+
+    df.describe().to_csv("analysis_results.csv")
     
-    commute_times = df['Commute'].dropna().astype(float)
-    if not commute_times.empty:
-    average_commute_time = commute_times.mean()
-    print(f"Average Commute Time: {average_commute_time:.2f}")
-    sns.histplot(average_commute_time, bins=20, kde=True)
-    plt.title('CommuteTime Distribution')
-    plt.xlabel('CommuteTime')
-    plt.ylabel('Frequency')
-    plt.show()
-    commutetime=df['CommuteTime'].value_counts()
-    average_commutetime=sum(commutetime)/len(commutetime)
-    print(average_commutetime)
-    if 'SchoolDegree' in df.columns:
-        degree_counts = df['SchoolDegree'].value_counts()
-        print("School Degrees:")
-        print(degree_counts)
+def export_data():
+    try:
+        data = pd.read_pickle('data.pkl')
+    except FileNotFoundError:
+        print("No data found! Please import and analyze data first.")
+        return
+    print("Choose the export format:")
+
 def main():
     while True:
         print("\nData Tool Menu:")
