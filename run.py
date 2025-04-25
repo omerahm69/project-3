@@ -100,8 +100,6 @@ def analyze_data():
     plt.ylabel('Frequency')
     plt.show()
     print(schooldegree)
-    #df.describe().to_csv("analysis_results.csv")
-    
 
     income=df['Income'].value_counts()
     average_income=sum(income)/len(income)
