@@ -6,6 +6,34 @@ The aim of the project is to build an application that analyzes survey data and 
 
 This application is a command-line interface (CLI) design, for easy data import and analysis. 
 
+## How to use it
+
+Run the interactive four-step menu (any combo of Import > Analyze > Visualize > Export):
+
+```
+python run.py
+```
+
+Or run the whole pipeline in one command on any CSV/Excel file — it imports the data,
+analyses it, saves charts to `plots/` and writes a full report to `reports/`:
+
+```
+python run.py my_data.csv
+python run.py my_data.xlsx
+python run.py --quick my_data.csv
+```
+
+The tool works on **any** dataset: it auto-detects numeric vs categorical columns, treats
+common missing-value tokens (`NA`, `?`, `-`, blank cells) as missing, prints plain-language
+insights (skew, strongest correlations, most common categories), saves a distribution chart
+per column, and exports:
+
+- `reports/analysis_results.csv` (+ `.xlsx`) — one summary row per column
+- `reports/analysis_export.csv` — the cleaned dataset
+- `reports/insights.txt` — numbered takeaways from the data
+
+The bundled example dataset is `imported_data.csv` (2016 FCC New Coder survey sample).
+
 Features:
 
 The potential features of the project include the following:
